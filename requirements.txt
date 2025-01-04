@@ -2,3 +2,7 @@ kagglehub
 hopsworks[python]
 python-dotenv
 pandas
+matplotlib
+scikit-learn
+xgboost
+numpy
