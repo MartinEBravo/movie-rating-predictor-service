@@ -1,0 +1,3 @@
+kagglehub
+hopsworks[python]
+python-dotenv
