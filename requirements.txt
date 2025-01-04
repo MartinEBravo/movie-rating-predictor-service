@@ -1,3 +1,4 @@
 kagglehub
 hopsworks[python]
 python-dotenv
+pandas
