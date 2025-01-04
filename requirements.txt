@@ -6,3 +6,5 @@ matplotlib
 scikit-learn
 xgboost
 numpy
+pickle
+hsml
