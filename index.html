@@ -4,73 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Rating Predictor</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 20px;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
-        .gallery img {
-            max-width: 150px;
-            height: auto;
-            cursor: pointer;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            transition: transform 0.2s ease;
-        }
-        .gallery img:hover {
-            transform: scale(1.1);
-            border-color: #007BFF;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-        }
-        .modal-header {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-        .modal-content {
-            font-size: 16px;
-        }
-        .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: red;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            text-align: center;
-            line-height: 30px;
-            font-size: 18px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Upcoming Movies</h1>
-    <div class="gallery" id="gallery"></div>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">Movie Ratings</div>
+            <button id="themeToggle">🌙</button>
+        </nav>
+    </header>
+
+    <!-- Search Bar -->
+    <section id="search">
+        <p>
+            Welcome to Movie Rating Predictor, your go-to platform for exploring upcoming movies and predicting their IMDb ratings!
+        </p>
+        <p>
+            Our goal is to provide users with a simple and intuitive way to browse upcoming films, view essential details such as cast, director, and release date, and access predicted IMDb ratings generated from data-driven models.
+        </p>
+        <p>
+            Whether you're a movie enthusiast or simply curious about the latest releases, our site helps you stay informed and make decisions on what to watch next.
+        </p>
+        <p>
+            Happy browsing and enjoy your cinematic journey!
+        </p>
+        <input type="text" id="searchBar" placeholder="Search for a movie..." />
+    </section>
+
+    <!-- Movie Gallery -->
+    <section id="home" class="gallery">
+        <div id="loadingSpinner" class="spinner"></div>
+        <div id="gallery"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Movie Ratings. All rights reserved.</p>
+    </footer>
 
     <!-- Modal for Movie Details -->
     <div class="modal" id="movieModal">
