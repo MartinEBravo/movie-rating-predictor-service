@@ -2,7 +2,7 @@ name: movie-rating-daily
 on:
   workflow_dispatch:
   schedule:
-    - cron: '05 23 * * *'
+    - cron: '22 22 * * *'
   push:
     branches:
       - main
