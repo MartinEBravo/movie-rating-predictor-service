@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Rating Predictor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">Movie Ratings</div>
+            <button id="themeToggle">🌙</button>
+        </nav>
+    </header>
+
+    <!-- Search Bar -->
+    <section id="search">
+        <p>
+            Welcome to Movie Rating Predictor, your go-to platform for exploring upcoming movies and predicting their IMDb ratings!
+        </p>
+        <p>
+            Our goal is to provide users with a simple and intuitive way to browse upcoming films, view essential details such as cast, director, and release date, and access predicted IMDb ratings generated from data-driven models.
+        </p>
+        <p>
+            Whether you're a movie enthusiast or simply curious about the latest releases, our site helps you stay informed and make decisions on what to watch next.
+        </p>
+        <p>
+            Happy browsing and enjoy your cinematic journey!
+        </p>
+        <input type="text" id="searchBar" placeholder="Search for a movie..." />
+    </section>
+
+    <!-- Movie Gallery -->
+    <section id="home" class="gallery">
+        <div id="loadingSpinner" class="spinner"></div>
+        <div id="gallery"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Movie Ratings. All rights reserved.</p>
+    </footer>
+
+    <!-- Modal for Movie Details -->
+    <div class="modal" id="movieModal">
+        <button class="modal-close" id="modalClose">&times;</button>
+        <div class="modal-header" id="modalTitle"></div>
+        <div class="modal-content" id="modalDetails"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
