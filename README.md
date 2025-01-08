@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a serverless machine learning system that predicts IMDb ratings for movies using a dynamic dataset from Kaggle. The system comprises four main pipelines:
+This project is a serverless machine learning system that predicts IMDb ratings for movies using a dynamic dataset from [Kaggle](https://www.kaggle.com/datasets/alanvourch/tmdb-movies-daily-updates/data). The system comprises four main pipelines:
 
 1. `1_historical_data`: Backfills the feature store with historical data.
 2. `2_feature_pipeline`: Updates the feature store daily with new data.
@@ -19,7 +19,7 @@ This project leverages **Hopsworks** for the feature store and **GitHub Actions*
 
 ## Dataset
 
-The dataset used is from Kaggle, containing the complete movie list from The Movie Database (TMDB) along with IMDb information. It includes 28 columns, such as:
+The dataset used is from [Kaggle](https://www.kaggle.com/datasets/alanvourch/tmdb-movies-daily-updates/data), containing the complete movie list from The Movie Database (TMDB) along with IMDb information. It includes 28 columns, such as:
 
 - `vote_average`, `vote_count`, `status`, `release_date`, `revenue`, `runtime`, `budget`
 - `imdb_rating`, `imdb_votes`, `original_language`, `overview`, `popularity`, `tagline`
