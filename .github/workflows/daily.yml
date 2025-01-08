@@ -34,11 +34,19 @@ jobs:
           jupyter nbconvert --to notebook --execute 2_feature_pipeline.ipynb
           jupyter nbconvert --to notebook --execute 4_inference_pipeline.ipynb
 
-      - name: Commit and push changes
-        run: |
-          cd $GITHUB_WORKSPACE
-          git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
-          git add movies.csv
-          git commit -m "Update movies.csv [skip ci]" || echo "No changes to commit"
-          git push
+- name: Push commit
+  on: push
+  permissions:
+    contents: write
+  jobs:
+    report:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - name: Commit report
+          run: |
+            git config --global user.name 'your-username'
+            git config --global user.email 'your-username@users.noreply.github.com'
+            git add movies.csv
+            git commit -am "Automated report"
+            git push
