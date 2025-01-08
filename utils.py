@@ -1,5 +1,7 @@
 import datetime
 import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+
 
 def preprocess(df):
     # Drop null values
@@ -13,6 +15,26 @@ def preprocess(df):
     df['timestamp'] = pd.to_datetime(today)
 
     return df
+
+def new_features(df):
+    label_encoder = LabelEncoder()
+    # Label encoding categorical features
+    df1=df.copy()
+    df1['first_producer'] = df1['producers'].str.split(',').str[0]
+    df1['first_actor']=df1["cast"].str.split(',').str[0]
+    df1['first_company'] = df1['production_companies'].str.split(',').str[0]
+
+    threshold = 0.001  # Minimum frequency threshold (1%)
+    producer_counts = df1['first_company'].value_counts(normalize=True)
+    df1 = df1.dropna(subset=['first_company'])
+    df1['first_company'] = df1['first_company'].apply(lambda x: x if producer_counts[x] > threshold else 'Other')
+
+    df1['first_producer'] = label_encoder.fit_transform(df1['first_producer'])
+    df1['first_actor'] = label_encoder.fit_transform(df1['first_actor'])
+    df1['first_company'] = label_encoder.fit_transform(df1['first_company'])
+    df1['original_language'] = label_encoder.fit_transform(df1['original_language'])
+
+    return df1
 
 def split_genres(df):
     # Split the genres into separate rows and one-hot encode
