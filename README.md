@@ -1,7 +1,8 @@
 # Serverless Machine Learning System for IMDb Movie Rating Prediction
 
 ## Overview
-This repository contains a serverless machine learning system that dynamically predicts the IMDb ratings of movies using a Kaggle dataset. It features four pipelines:
+
+This project is a serverless machine learning system that predicts IMDb ratings for movies using a dynamic dataset from [Kaggle](https://www.kaggle.com/datasets/alanvourch/tmdb-movies-daily-updates/data). The system comprises four main pipelines:
 
 1. **Historical Data Pipeline**: Backfills the feature store with historical data.
 2. **Feature Pipeline**: Handles daily data updates.
@@ -13,7 +14,16 @@ A user interface (UI) is available for monitoring predictions. The website allow
 Key technologies used include Hopsworks for the feature store and GitHub Actions for automating daily workflows and pipeline execution.
 
 ## Dataset
-The dataset originates from Kaggle and contains The Movie Database (TMDB) full movie list with IMDb information. It includes 28 columns such as `vote_average`, `vote_count`, `status`, `release_date`, `revenue`, `runtime`, `budget`, `imdb_rating`, `imdb_votes`, `original_language`, `popularity`, `genres`, `production_companies`, `production_countries`, `cast`, `producers`, `directors`, and `writers`. This dataset is updated daily, making it dynamic and continuously evolving.
+
+The dataset used is from [Kaggle](https://www.kaggle.com/datasets/alanvourch/tmdb-movies-daily-updates/data), containing the complete movie list from The Movie Database (TMDB) along with IMDb information. It includes 28 columns, such as:
+
+- `vote_average`, `vote_count`, `status`, `release_date`, `revenue`, `runtime`, `budget`
+- `imdb_rating`, `imdb_votes`, `original_language`, `overview`, `popularity`, `tagline`
+- `genres`, `production_companies`, `production_countries`, `cast`, `producers`, `directors`, `writers`
+
+The dataset is updated daily, ensuring its dynamic nature.
+
+---
 
 ## Methodology
 
@@ -21,15 +31,19 @@ The dataset originates from Kaggle and contains The Movie Database (TMDB) full m
 Historical data backfilling was done by filtering movies with the `status` set to "Released," ensuring that IMDb ratings were available for training. Missing data columns were dropped, and data cleaning was performed.
 
 ### Feature Engineering
-- Features `vote_average` and `popularity` were removed to ensure the model predicted IMDb ratings without bias from similar metrics.
-- `vote_count`, which correlated with `vote_average`, was excluded.
-- `release_date` was transformed into `release_year` to group movies by production year.
-- New features were created:
-  - `first_producer`, `first_actor`, and `first_company` by extracting the first value from respective columns and applying label encoding.
-  - One-hot encoding was applied to the `genres` column, creating a separate feature group that was merged with the main feature group during training.
-- The `spoken_language` categorical feature was excluded after evaluation showed better performance without it.
+Features ‘vote_average’ and ‘popularity’ were removed since they can be seen as measures of the movie’s rating and we wanted the model to predict the rating without using a similar score as a variable. Since the target to predict was imdb rating, ‘vote_count’ associated with ‘vote_average’ was not relevant either. Release date was converted to release_year, grouping the movies made in the same year together.
 
-The final feature set included `budget`, `runtime`, `release_year`, `imdb_votes`, `first_producer`, `first_actor`, `first_company`, one-hot encoded genres, and a total of 27 features.
+We created new features from the “producers”, “cast” and “production_companies” through choosing the first value in each cell creating “first_producer”, “first_actor”, and “first_company” and label encoding them. The “genres” column was also one-hot encoded and uploaded to a new feature group, which then in the training pipeline was merged with the initial feature group.
+
+There was also evaluation done on including or removing the categorical feature original_language and the results showed the model had a lower MSE score and higher R2 value when keeping this variable. The final features used for the training of the models were: budget, runtime, release_year, imdb_votes, original_language, first_producer, first_actor, first_company and the one-hot encoding for the 19 unique genres, giving a total of: 27 features.
+
+Final features used for training included:
+
+- `budget`, `runtime`, `release_year`, `imdb_votes`
+- `first_producer`, `first_actor`, `first_company`, `original_language`
+- One-hot encoded `genres` (19 unique genres)
+
+This resulted in a total of **27 features**.
 
 ### Models
 The following models were compared:
