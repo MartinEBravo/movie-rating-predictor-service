@@ -57,6 +57,7 @@ Final features used for training included:
 This resulted in a total of **27 features**.
 
 ### Models
+
 The following models were compared:
 - XGB Regressor
 - Random Forest Regression
@@ -70,7 +71,22 @@ The **XGB Regressor** emerged as the best-performing model, with an MSE of 0.54 
 For the inference pipeline, predictions were made for both newly released movies and movies in "Post Production" status. For unreleased movies, an estimated `imdb_votes` value of 400 was used and an average runtime of 124. The website displayed predicted and actual ratings for 20 newly updated movies.
 
 ## Results
-The results demonstrated the effectiveness of the XGB Regressor, outperforming other models. The inclusion of a mix of simple and complex models ensured adaptability to different data scenarios. The website provided a user-friendly interface for exploring movie ratings and comparing predicted and actual IMDb ratings.
+The results demonstrated the effectiveness of the XGB Regressor, outperforming other models. The inclusion of a mix of simple and complex models ensured adaptability to different data scenarios. We can see that the prediction of the movies is quite accurate, with a small difference between the predicted and actual IMDb ratings. We can see the results of the test data below:
+
+Predicted | Actual
+--- | ---
+5.857948 | 7.1
+6.3983464 | 6.3
+5.2628407 | 6.1
+4.411699 | 4.2
+5.9354286 | 5.9
+6.1494517 | 6.1
+4.789273 | 4.4
+4.68718 | 4.2
+4.7766104 | 6.6
+6.090134 | 6.3
+
+The website allows users to explore different movies, view predicted ratings, and navigate to the IMDb page of a selected movie to see its actual IMDb rating.
 
 ## How to Run the Code
 1. Create a profile on [Hopsworks.ai](https://www.hopsworks.ai/) and obtain an API key.
