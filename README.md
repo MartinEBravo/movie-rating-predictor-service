@@ -33,10 +33,7 @@ The dataset is updated daily, ensuring its dynamic nature.
 
 ### Historical Backfilling
 
-The `1_historical_data` pipeline filters movies with a `status` of `"Released"`, as movies without IMDb ratings cannot be used as targets for training. Additional data cleaning steps include:
-
-- Dropping columns with missing data.
-- Removing duplicates.
+The `1_historical_data` pipeline filters movies with a `status` of `"Released"`, as movies without IMDb ratings cannot be used as targets for training. Data cleaning was also performed where columns with missing data were dropped.
 
 ### Feature Engineering
 
