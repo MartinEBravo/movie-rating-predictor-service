@@ -25,22 +25,6 @@ header nav {
     align-items: center;
 }
 
-header .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-}
-
-header .nav-links li {
-    display: inline;
-}
-
-header .nav-links a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-}
-
 /* Theme Toggle */
 #themeToggle {
     background: none;
@@ -66,20 +50,11 @@ header .nav-links a {
 
 /* Gallery - Responsive Grid Layout */
 .gallery {
-    display: grid; /* Use CSS Grid */
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Flexible columns */
-    gap: 20px; /* Spacing between cards */
-    padding: 20px; /* Padding around the grid */
-    justify-content: center; /* Center align content */
-}
-
-/* Gallery - Responsive Grid Layout */
-.gallery {
-    display: grid; /* Enable grid layout */
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Flexible column layout */
-    gap: 20px; /* Spacing between items */
-    padding: 20px; /* Padding around the grid */
-    justify-items: center; /* Center-align items within the grid cells */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
 }
 
 /* Card Styles */
@@ -94,10 +69,9 @@ header .nav-links a {
 }
 
 .gallery .card img {
-    width: 100%; /* Ensure images fit within the card */
-    height: auto;
+    width: 100%;
     border-radius: 10px;
-    object-fit: cover; /* Maintain aspect ratio of images */
+    object-fit: cover;
 }
 
 .gallery .card h3 {
@@ -110,7 +84,7 @@ header .nav-links a {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-
+/* Spinner */
 .spinner {
     display: none;
     margin: 20px auto;
@@ -127,50 +101,10 @@ header .nav-links a {
     100% { transform: rotate(360deg); }
 }
 
-/* Modal */
-.modal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-}
-
-.modal-header {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-.modal-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: red;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
 /* Footer */
 footer {
     background: #333;
     color: white;
     text-align: center;
     padding: 10px;
-}
-
-footer .social-icons img {
-    width: 24px;
-    margin: 0 5px;
-    cursor: pointer;
-}
-
-footer .social-icons img:hover {
-    opacity: 0.8;
 }
