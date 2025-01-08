@@ -13,7 +13,7 @@ A user interface (UI) is available for monitoring predictions. The website allow
 
 Key technologies used include Hopsworks for the feature store and GitHub Actions for automating daily workflows and pipeline execution.
 
-![pipeline](img1.png)
+![pipeline](imgs/img1.png)
 
 ## Website
 
@@ -21,7 +21,7 @@ The website is available at [Movie Rating Predictor](https://martinebravo.github
 
 We can see the predicted ratings for 20 newly updated movies, if we click on the movie poster we will be redirected to the IMDb page of the movie to see the actual IMDb rating.
 
-![Website](web.png)
+![Website](imgs/web.png)
 
 ## Dataset
 
