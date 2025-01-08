@@ -34,13 +34,26 @@ jobs:
         run: |
           jupyter nbconvert --to notebook --execute 2_feature_pipeline.ipynb
           jupyter nbconvert --to notebook --execute 4_inference_pipeline.ipynb
-
-      - name: Push updated movies.csv
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and Push Changes
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          
+          timestamp=$(date +'%Y%m%d%H%M%S')
+          branch_name="update-csv-$timestamp"
+      
+          git checkout -b "$branch_name"
+      
           git add movies.csv
-          git commit -m "Update movies.csv [Automated]"
-          git push
+      
+          git commit -m "Update CSV file"
+      
+          git push origin "$branch_name"
+      
+          git checkout main
+          git merge --no-ff "$branch_name"
+          git push origin main
+      
+          # delete the temporary branch
+          git branch -d "$branch_name"
+          git push origin --delete "$branch_name"
