@@ -56,7 +56,7 @@ The following models were compared:
 The **XGB Regressor** emerged as the best-performing model, with an MSE of 0.54 and an R-squared value of 0.58. The Random Forest Regressor performed closely, offering a balance between simplicity and complexity suitable for varying dataset sizes.
 
 ### Inference Pipeline
-For the inference pipeline, predictions were made for both newly released movies and movies in "Post Production" status. For unreleased movies, an estimated `imdb_votes` value of 400 was used. The website displayed predicted and actual ratings for 20 newly updated movies.
+For the inference pipeline, predictions were made for both newly released movies and movies in "Post Production" status. For unreleased movies, an estimated `imdb_votes` value of 400 was used and an average runtime of 124. The website displayed predicted and actual ratings for 20 newly updated movies.
 
 ## Results
 The results demonstrated the effectiveness of the XGB Regressor, outperforming other models. The inclusion of a mix of simple and complex models ensured adaptability to different data scenarios. Looking at the predicted ratings for the movies in "Post Production" status they are relatively low, this could be caused by the set values on runtime and imdb_votes since they were missing in many of the rows.
