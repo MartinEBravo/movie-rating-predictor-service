@@ -2,8 +2,8 @@ name: movie-rating-daily
 
 on:
   workflow_dispatch:
-  #schedule:
-  #  - cron: '11 5 * * *'
+  schedule:
+   - cron: '11 5 * * *'
 
 jobs:
   schedule_pipelines:
