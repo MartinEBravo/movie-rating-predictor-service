@@ -86,7 +86,7 @@ Predicted | Actual
 4.7766104 | 6.6
 6.090134 | 6.3
 
-The website allows users to explore different movies, view predicted ratings, and navigate to the IMDb page of a selected movie to see its actual IMDb rating.
+We can see that some of the predictions are quite close to the actual IMDb rating, with a small difference between the predicted and actual ratings. We also see that some values are not as close, but this is expected since the model is not perfect and there are many factors that can influence the IMDb rating of a movie. The website allows users to explore different movies, view predicted ratings, and navigate to the IMDb page of a selected movie to see its actual IMDb rating.
 
 ## How to Run the Code
 1. Create a profile on [Hopsworks.ai](https://www.hopsworks.ai/) and obtain an API key.
