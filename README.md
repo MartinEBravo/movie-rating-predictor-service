@@ -36,19 +36,16 @@ The dataset is updated daily, ensuring its dynamic nature.
 The `1_historical_data` pipeline filters movies with a `status` of `"Released"`, as movies without IMDb ratings cannot be used as targets for training. Data cleaning was also performed where columns with missing data were dropped.
 
 ### Feature Engineering
+Features ‘vote_average’ and ‘popularity’ were removed since they can be seen as measures of the movie’s rating and we wanted the model to predict the rating without using a similar score as a variable. Since the target to predict was imdb rating, ‘vote_count’ associated with ‘vote_average’ was not relevant either. Release date was converted to release_year, grouping the movies made in the same year together.
 
-The following steps were taken during feature engineering:
+We created new features from the “producers”, “cast” and “production_companies” through choosing the first value in each cell creating “first_producer”, “first_actor”, and “first_company” and label encoding them. The “genres” column was also one-hot encoded and uploaded to a new feature group, which then in the training pipeline was merged with the initial feature group.
 
-- Removed features: `vote_average` and `popularity`, as they are proxies for movie ratings. Similarly, `vote_count` (related to `vote_average`) was also excluded.
-- Converted `release_date` to `release_year` to group movies by production year.
-- Created new features from `producers`, `cast`, and `production_companies` by selecting the first value in each cell. These were label-encoded into `first_producer`, `first_actor`, and `first_company`.
-- One-hot encoded the `genres` column and uploaded it to a new feature group. This was later merged with the initial feature group during training.
-- Evaluated the inclusion of the `spoken_language` feature. Results showed improved model performance (lower MSE, higher R²) when excluding this feature.
+There was also evaluation done on including or removing the categorical feature original_language and the results showed the model had a lower MSE score and higher R2 value when keeping this variable. The final features used for the training of the models were: budget, runtime, release_year, imdb_votes, original_language, first_producer, first_actor, first_company and the one-hot encoding for the 19 unique genres, giving a total of: 27 features.
 
 Final features used for training included:
 
 - `budget`, `runtime`, `release_year`, `imdb_votes`
-- `first_producer`, `first_actor`, `first_company`
+- `first_producer`, `first_actor`, `first_company`, `original_language`
 - One-hot encoded `genres` (19 unique genres)
 
 This resulted in a total of **27 features**.
