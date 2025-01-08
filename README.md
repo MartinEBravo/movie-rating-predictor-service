@@ -13,6 +13,8 @@ A user interface (UI) is available for monitoring predictions. The website allow
 
 Key technologies used include Hopsworks for the feature store and GitHub Actions for automating daily workflows and pipeline execution.
 
+![pipeline](img1.png)
+
 ## Website
 
 The website is available at [Movie Rating Predictor](https://martinebravo.github.io/movie-rating-predictor-service/).
@@ -20,8 +22,6 @@ The website is available at [Movie Rating Predictor](https://martinebravo.github
 We can see the predicted ratings for 20 newly updated movies, if we click on the movie poster we will be redirected to the IMDb page of the movie to see the actual IMDb rating.
 
 ![Website](web.png)
-
-
 
 ## Dataset
 
@@ -34,6 +34,7 @@ The dataset used is from [Kaggle](https://www.kaggle.com/datasets/alanvourch/tmd
 The dataset is updated daily, ensuring its dynamic nature.
 
 ---
+
 
 ## Methodology
 
@@ -79,3 +80,5 @@ The results demonstrated the effectiveness of the XGB Regressor, outperforming o
    - Run `1_historical_data.ipynb` to backfill the feature store.
    - Run `3_training_pipeline.ipynb` to train the model.
 5. Use GitHub Actions to automate the execution of `2_feature_pipeline.ipynb` and `4_inference_pipeline.ipynb` daily.
+
+
