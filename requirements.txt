@@ -4,7 +4,6 @@ python-dotenv
 pandas
 matplotlib
 scikit-learn
-xgboost
+xgboost==1.7.6
 numpy
-pickle
 hsml
