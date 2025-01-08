@@ -7,3 +7,5 @@ scikit-learn
 xgboost==1.7.6
 numpy
 hsml
+jupyter
+nbconvert
