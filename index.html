@@ -3,37 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Rating Predictor</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Movie Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .card h3 {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .spinner {
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
-        <nav>
-            <div class="logo">Movie Ratings</div>
-            <button id="themeToggle">🌙</button>
-        </nav>
+        <h1>Movie Gallery</h1>
     </header>
 
-    <!-- Search Bar -->
-    <section id="search">
-        <p>
-            Welcome to Movie Rating Predictor, your go-to platform for exploring upcoming movies and predicting their IMDb ratings!
-        </p>
-        <input type="text" id="searchBar" placeholder="Search for a movie..." />
-    </section>
+    <div class="spinner" id="spinner">Loading...</div>
+    <div class="gallery" id="gallery"></div>
 
-    <!-- Movie Gallery -->
-    <section id="home" class="gallery">
-        <div id="loadingSpinner" class="spinner"></div>
-        <div id="gallery"></div>
-    </section>
+    <script>
+        const csvUrl = "https://raw.githubusercontent.com/MartinEBravo/movie-rating-predictor-service/main/movies.csv";
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Movie Ratings. All rights reserved.</p>
-    </footer>
+        async function fetchCSV(url) {
+            const response = await fetch(url);
+            const csvText = await response.text();
+            
+            // Split rows by newline and columns by semicolon
+            const rows = csvText.split("\n").map(row => row.split(";"));
+            const headers = rows[0];
+            const data = rows.slice(1).map(row => {
+                const obj = {};
+                row.forEach((value, index) => {
+                    obj[headers[index].trim()] = value.trim();
+                });
+                return obj;
+            });
+            return data;
+        }
 
-    <script src="script.js"></script>
+        async function displayMovies() {
+            const spinner = document.getElementById("spinner");
+            const gallery = document.getElementById("gallery");
+
+            try {
+                const movies = await fetchCSV(csvUrl);
+
+                gallery.innerHTML = ""; // Clear spinner
+                spinner.style.display = "none";
+
+                movies.forEach(movie => {
+                    // Handle missing values with fallbacks
+                    const title = movie["title"] || "Unknown Title";
+                    const rating = movie["predicted_rating"] || "N/A";
+                    const poster = movie["poster_path"]
+                        ? `https://image.tmdb.org/t/p/w200${movie["poster_path"]}`
+                        : "https://via.placeholder.com/200x300?text=No+Image";
+
+                    const card = document.createElement("div");
+                    card.className = "card";
+
+                    card.innerHTML = `
+                        <img src="${poster}" alt="${title}">
+                        <h3>${title}</h3>
+                        <p>Predicted Rating: ${rating}</p>
+                    `;
+
+                    gallery.appendChild(card);
+                });
+            } catch (error) {
+                console.error("Error fetching or parsing CSV:", error);
+                spinner.textContent = "Failed to load movies.";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", displayMovies);
+    </script>
 </body>
 </html>
