@@ -1,42 +1,94 @@
 # movie-rating-predictor-service
 
-## What you have done
+## Overview
 
-This is a serverless machine learning system that takes a dynamic movie dataset from Kaggle and predicts the IMDb rating of movies. There are 4 pipelines in this repository: 1_historical_data for backfilling the feature store with historical data, 2_feature_pipeline for the daily updates of data, 3_training_pipeline for training the model and 4_inference_pipeline which uses the trained model and predicts the rating for new movies. 
+This project is a serverless machine learning system that predicts IMDb ratings for movies using a dynamic dataset from Kaggle. The system comprises four main pipelines:
 
-To monitor the predictions, there is a UI  ______. A website was created where the user can navigate between different movies and see the predicted ratings for the posters displayed. The user can also click on the movie and is then redirected to the IMDb website where they can see the actual IMDb rating. 
+1. `1_historical_data`: Backfills the feature store with historical data.
+2. `2_feature_pipeline`: Updates the feature store daily with new data.
+3. `3_training_pipeline`: Trains the machine learning model.
+4. `4_inference_pipeline`: Uses the trained model to predict ratings for new movies.
 
-Hopsworks is used for the feature store, Github Actions for the daily workflow and running the feature and inference pipeline.
+To monitor predictions, a user interface (UI) was developed. Users can explore different movies, view their predicted ratings alongside their posters, and click on a movie to be redirected to its IMDb page for the actual rating.
+
+This project leverages **Hopsworks** for the feature store and **GitHub Actions** for automating the daily workflows.
 
 ![image](imgs/img1.png)
 
+---
+
 ## Dataset
 
-The dataset used for this project was a Kaggle dataset, containing the The Movie Database (TMDB) full movie list and IMDb information. It has a total of 28 columns including: vote_average, vote_count, status, release_date, revenue, runtime, budget, imdb_rating, imdb_votes, original_language, overview, popularity, tagline, genres, production_companies, production_countries, cast, producers, directors and writers. The dataset is updated everyday making it dynamic.
+The dataset used is from Kaggle, containing the complete movie list from The Movie Database (TMDB) along with IMDb information. It includes 28 columns, such as:
 
-## Method
+- `vote_average`, `vote_count`, `status`, `release_date`, `revenue`, `runtime`, `budget`
+- `imdb_rating`, `imdb_votes`, `original_language`, `overview`, `popularity`, `tagline`
+- `genres`, `production_companies`, `production_countries`, `cast`, `producers`, `directors`, `writers`
 
-### Historical backfilling:
-The historical data was done through filtering on the status of the movie as “Released”, as there otherwise is no imdb_rating to use for the target value in training and as there could be missing values for the features used. Data cleaning was also performed where columns with missing data were dropped and duplicates were dropped.
+The dataset is updated daily, ensuring its dynamic nature.
 
-### Feature engineering:
-Features ‘vote_avera ge’ and ‘popularity’ were removed since they can be seen as measures of the movie’s rating and we wanted the model to predict the rating without using a similar score as a variable. Since the target to predict was imdb rating, ‘vote_count’ associated with ‘vote_average’ was not relevant either. Release date was converted to release_year, grouping the movies made in the same year together.
+---
 
-We created new features from the “producers”, “cast” and “production_companies” through choosing the first value in each cell creating “first_producer”, “first_actor”, and “first_company” and label encoding them. The “genres” column was also one-hot encoded and uploaded to a new feature group, which then in the training pipeline was merged with the initial feature group.
+## Methodology
 
-There was also evaluation done on including or removing the categorical feature spoken-language and the results showed the model had a lower MSE score and higher R2 rating when removing this variable. The final features used for the training of the models were: budget, runtime, release_year, imdb_votes, first_producer, first_actor, first_company, spoken_language and the one-hot encoding for the 19 unique genres, giving a total of: 27 features.
+### Historical Backfilling
 
-## Models:
-The models compared were: XGB Regressor, Random Forest Regression, Linear Regression, SVR and Decision Tree Regressor. 
+The `1_historical_data` pipeline filters movies with a `status` of `"Released"`, as movies without IMDb ratings cannot be used as targets for training. Additional data cleaning steps include:
 
-For the prediction of the inference pipeline, we thought it would be fun to predict the rating for movies that have not been released yet, so apart from the available predictions that are from the updated data, the movies with status “Post Production” were used to predict. For the “imdb_votes” feature an estimate of 400 was chosen to the new movies. To monitor the pipeline, the website also showed the predicted rating and the actual rating for 20 newly updated movies _______. As shown below: ___
+- Dropping columns with missing data.
+- Removing duplicates.
+
+### Feature Engineering
+
+The following steps were taken during feature engineering:
+
+- Removed features: `vote_average` and `popularity`, as they are proxies for movie ratings. Similarly, `vote_count` (related to `vote_average`) was also excluded.
+- Converted `release_date` to `release_year` to group movies by production year.
+- Created new features from `producers`, `cast`, and `production_companies` by selecting the first value in each cell. These were label-encoded into `first_producer`, `first_actor`, and `first_company`.
+- One-hot encoded the `genres` column and uploaded it to a new feature group. This was later merged with the initial feature group during training.
+- Evaluated the inclusion of the `spoken_language` feature. Results showed improved model performance (lower MSE, higher R²) when excluding this feature.
+
+Final features used for training included:
+
+- `budget`, `runtime`, `release_year`, `imdb_votes`
+- `first_producer`, `first_actor`, `first_company`
+- One-hot encoded `genres` (19 unique genres)
+
+This resulted in a total of **27 features**.
+
+### Model Selection
+
+The following models were evaluated:
+
+- **XGB Regressor** (Best-performing model)
+- Random Forest Regression
+- Linear Regression
+- SVR (Support Vector Regressor)
+- Decision Tree Regressor
+
+For inference, predictions were also made for movies with a `status` of `"Post Production"`. For these movies, the `imdb_votes` feature was estimated as `400`.
+
+The UI displays predictions and actual ratings for 20 newly updated movies.
+
+---
 
 ## Results
-From the results it can be seen that the best performing model was the XGB Regressor, with the Random Forest Regressor coming in close second place. This to include more simple models as well as more complex models, suitable to different dataset sizes.
 
-The XGBoost Regressor had an MSE value of 0.51 and R squared value of 0.60.
+- **Best Model**: XGB Regressor
+- **Performance Metrics**:
+  - **MSE**: 0.51
+  - **R²**: 0.60
+- **Runner-up**: Random Forest Regressor
 
+This setup balances simple and complex models, ensuring suitability across varying dataset sizes.
 
-## How to run the code
+---
 
-To run the code a user has to create a profile on Hopsworks.ai to get an API key and a Github Account to be able to run the daily workflow. Then they can clone this repository and install the requirements. Run 1_historical_data.ipynb and then the 3_training_pipeline.ipynb. Through Github Actions to run the 2_feature_pipeline.ipynb and 4_inference_pipeline.ipynb daily.
+## How to Run the Code
+
+1. Create a profile on [Hopsworks.ai](https://www.hopsworks.ai/) and generate an API key.
+2. Set up a GitHub account to automate workflows.
+3. Clone this repository:
+   ```bash
+   git clone https://github.com/your-repo/movie-rating-predictor-service.git
+   cd movie-rating-predictor-service
