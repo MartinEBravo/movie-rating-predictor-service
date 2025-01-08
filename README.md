@@ -13,6 +13,16 @@ A user interface (UI) is available for monitoring predictions. The website allow
 
 Key technologies used include Hopsworks for the feature store and GitHub Actions for automating daily workflows and pipeline execution.
 
+## Website
+
+The website is available at [Movie Rating Predictor](https://martinebravo.github.io/movie-rating-predictor-service/).
+
+We can see the predicted ratings for 20 newly updated movies, if we click on the movie poster we will be redirected to the IMDb page of the movie to see the actual IMDb rating.
+
+![Website](web.png)
+
+
+
 ## Dataset
 
 The dataset used is from [Kaggle](https://www.kaggle.com/datasets/alanvourch/tmdb-movies-daily-updates/data), containing the complete movie list from The Movie Database (TMDB) along with IMDb information. It includes 28 columns, such as:

@@ -19,6 +19,19 @@
             padding: 10px;
         }
 
+        .search-bar {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
         .gallery {
             display: flex;
             flex-wrap: wrap;
@@ -64,6 +77,10 @@
         <h1>Movie Gallery</h1>
     </header>
 
+    <div class="search-bar">
+        <input type="text" id="search" placeholder="Search for movies...">
+    </div>
+
     <div class="spinner" id="spinner">Loading...</div>
     <div class="gallery" id="gallery"></div>
 
@@ -74,7 +91,6 @@
             const response = await fetch(url);
             const csvText = await response.text();
             
-            // Split rows by newline and columns by semicolon
             const rows = csvText.split("\n").map(row => row.split(";"));
             const headers = rows[0];
             const data = rows.slice(1).map(row => {
@@ -87,34 +103,45 @@
             return data;
         }
 
+        function createMovieCard(movie) {
+            const title = movie["title"] || "Unknown Title";
+            const rating = movie["predicted_rating"] || "N/A";
+            const poster = movie["poster_path"]
+                ? `https://image.tmdb.org/t/p/w200${movie["poster_path"]}`
+                : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
+            const imdbLink = movie["imdb_id"] ? `https://www.imdb.com/title/${movie["imdb_id"]}` : "#";
+
+            return `
+                <div class="card">
+                    <img src="${poster}" alt="${title}">
+                    <h3>${title}</h3>
+                    <p>Predicted Rating: ${rating}</p>
+                    <a href="${imdbLink}" target="_blank">View on IMDb</a>
+                </div>
+            `;
+        }
+
         async function displayMovies() {
             const spinner = document.getElementById("spinner");
             const gallery = document.getElementById("gallery");
+            const searchInput = document.getElementById("search");
 
             try {
                 const movies = await fetchCSV(csvUrl);
-
-                gallery.innerHTML = ""; // Clear spinner
                 spinner.style.display = "none";
 
-                movies.forEach(movie => {
-                    // Handle missing values with fallbacks
-                    const title = movie["title"] || "Unknown Title";
-                    const rating = movie["predicted_rating"] || "N/A";
-                    const poster = movie["poster_path"]
-                        ? `https://image.tmdb.org/t/p/w200${movie["poster_path"]}`
-                        : "https://via.placeholder.com/200x300?text=No+Image";
+                function renderGallery(filteredMovies) {
+                    gallery.innerHTML = filteredMovies.map(createMovieCard).join("");
+                }
 
-                    const card = document.createElement("div");
-                    card.className = "card";
+                renderGallery(movies);
 
-                    card.innerHTML = `
-                        <img src="${poster}" alt="${title}">
-                        <h3>${title}</h3>
-                        <p>Predicted Rating: ${rating}</p>
-                    `;
-
-                    gallery.appendChild(card);
+                searchInput.addEventListener("input", event => {
+                    const searchTerm = event.target.value.toLowerCase();
+                    const filteredMovies = movies.filter(movie =>
+                        (movie["title"] || "").toLowerCase().includes(searchTerm)
+                    );
+                    renderGallery(filteredMovies);
                 });
             } catch (error) {
                 console.error("Error fetching or parsing CSV:", error);
