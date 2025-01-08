@@ -1,5 +1,5 @@
 // Define the CSV file URL
-const csvUrl = "docs/movies.csv";
+const csvUrl = "movies.csv";
 
 // Fetch and parse the CSV file
 async function fetchCSV(url) {
