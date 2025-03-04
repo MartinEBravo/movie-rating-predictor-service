@@ -21,10 +21,9 @@ This makes it easy to deploy and test machine learning pipelines in a **scalable
 
 This project is a serverless machine learning system that predicts IMDb ratings for movies using a dynamic dataset from [Kaggle](https://www.kaggle.com/datasets/alanvourch/tmdb-movies-daily-updates/data). The system comprises four main pipelines:
 
-1. **Historical Data Pipeline**: Backfills the feature store with historical data.
-2. **Feature Pipeline**: Handles daily data updates.
-3. **Training Pipeline**: Trains the machine learning model.
-4. **Inference Pipeline**: Uses the trained model to predict ratings for new movies.
+1. **Feature Pipelines**: Backfills the feature store with historical data and handles daily data updates.
+2. **Training Pipeline**: Trains the machine learning model.
+3. **Inference Pipeline**: Uses the trained model to predict ratings for new movies.
 
 A user interface (UI) is available for monitoring predictions. The website allows users to explore different movies, view predicted ratings, and navigate to the IMDb page of a selected movie to see its actual IMDb rating. 
 
