@@ -1,13 +1,29 @@
 # Serverless Machine Learning System for IMDb Movie Rating Prediction
 
+## ⭐ Support the Project  
+
+If you find this project useful, please **give it a star** ⭐ on GitHub!  
+It helps others discover the project and keeps it growing.  
+
+👉 Click the ⭐ button at the top!  
+
+## 🚀 Free Cloud Resources for MLOps  
+
+Want to experiment with this project using a **real feature store**?  
+You can get started with **Hopsworks for free**!  
+
+🔹 Sign up for a free account at [Hopsworks.ai](https://www.hopsworks.ai/)  
+🔹 Get access to cloud resources to run feature pipelines and inference models.  
+
+This makes it easy to deploy and test machine learning pipelines in a **scalable** and **serverless** way.  
+
 ## Overview
 
 This project is a serverless machine learning system that predicts IMDb ratings for movies using a dynamic dataset from [Kaggle](https://www.kaggle.com/datasets/alanvourch/tmdb-movies-daily-updates/data). The system comprises four main pipelines:
 
-1. **Historical Data Pipeline**: Backfills the feature store with historical data.
-2. **Feature Pipeline**: Handles daily data updates.
-3. **Training Pipeline**: Trains the machine learning model.
-4. **Inference Pipeline**: Uses the trained model to predict ratings for new movies.
+1. **Feature Pipelines**: Backfills the feature store with historical data and handles daily data updates.
+2. **Training Pipeline**: Trains the machine learning model.
+3. **Inference Pipeline**: Uses the trained model to predict ratings for new movies.
 
 A user interface (UI) is available for monitoring predictions. The website allows users to explore different movies, view predicted ratings, and navigate to the IMDb page of a selected movie to see its actual IMDb rating. 
 
